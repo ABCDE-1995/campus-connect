@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Campus Connect - Home</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f7fa;
+    }
+
+    /* Navbar */
+    .navbar {
+      background: #222;
+      color: white;
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .navbar h1 {
+      margin: 0;
+      font-size: 20px;
+    }
+    .navbar a {
+      color: white;
+      margin-left: 15px;
+      text-decoration: none;
+      font-size: 15px;
+    }
+    .navbar a:hover {
+      text-decoration: underline;
+    }
+
+    /* Content */
+    .container {
+      text-align: center;
+      margin-top: 50px;
+    }
+    .container h2 {
+      color: #333;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      padding: 30px;
+    }
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+      transition: transform 0.2s;
+      text-align: center;
+    }
+    .card:hover {
+      transform: scale(1.05);
+    }
+    .card h3 {
+      margin: 0 0 10px;
+    }
+    .card a {
+      text-decoration: none;
+      color: #0077cc;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <h1>Campus Connect</h1>
+    <div>
+      <a href="home.html">Home</a>
+      <a href="announcement.html">Announcements</a>
+      <a href="events.html">Events</a>
+      <a href="lostfound.html">Lost & Found</a>
+      <a href="outline.html">College Outline</a>
+      <a href="about.html">About</a>
+      <a href="index.html">Logout</a>
+      <a href="profile.html">Logout</a>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="container">
+    <h2>Welcome to Campus Connect 🎓</h2>
+    <p>Quick access to all features of your college portal.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <h3>📢 Announcements</h3>
+        <a href="announcement.html">View & Post</a>
+      </div>
+      <div class="card">
+        <h3>🎭 Events</h3>
+        <a href="events.html">Explore & Post</a>
+      </div>
+      <div class="card">
+        <h3>🔎 Lost & Found</h3>
+        <a href="lostfound.html">Report / Search</a>
+      </div>
+      <div class="card">
+        <h3>🏫 College Outline</h3>
+        <a href="outline.html">See & Update</a>
+      </div>
+      <div class="card">
+        <h3>ℹ️ About</h3>
+        <a href="about.html">Learn More</a>
+      </div>
+      <div class="card">
+        <h3>🎭 Profile</h3>
+        <a href="profile.html">Profile</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Campus Connect - Events</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f3f4f6;
+    }
+
+    /* Navbar */
+    .navbar {
+      background: #222;
+      color: white;
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .navbar h1 {
+      margin: 0;
+      font-size: 20px;
+    }
+    .navbar a {
+      color: white;
+      margin-left: 15px;
+      text-decoration: none;
+      font-size: 15px;
+    }
+    .navbar a:hover {
+      text-decoration: underline;
+    }
+
+    /* Content */
+    .container {
+      text-align: center;
+      padding: 20px;
+    }
+
+    .btn-group {
+      margin: 20px 0;
+    }
+    .btn {
+      padding: 12px 24px;
+      margin: 8px;
+      border: none;
+      border-radius: 25px;
+      background: #3f51b5;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    .btn:hover {
+      background: #283593;
+      transform: scale(1.05);
+    }
+
+    .card {
+      display: none;
+      background: white;
+      margin: 15px auto;
+      padding: 20px;
+      width: 90%;
+      max-width: 500px;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      text-align: left;
+    }
+
+    .event-item {
+      background: #f1f1f1;
+      margin: 8px 0;
+      padding: 10px;
+      border-radius: 8px;
+    }
+
+    .form-input, .form-select {
+      display: block;
+      width: 90%;
+      margin: 10px auto;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    .submit-btn {
+      background: #4caf50;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 25px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .submit-btn:hover {
+      background: #2e7d32;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <h1>Campus Connect</h1>
+    <div>
+      <a href="home.html">Home</a>
+      <a href="announcement.html">Announcements</a>
+      <a href="events.html">Events</a>
+      <a href="lostfound.html">Lost & Found</a>
+      <a href="outline.html">College Outline</a>
+      <a href="about.html">About</a>
+      <a href="index.html">Logout</a>
+    </div>
+  </div>
+
+  <!-- Page Content -->
+  <div class="container">
+    <h2>🎉 College Events</h2>
+
+    <div class="btn-group">
+      <button class="btn" onclick="showSection('technical')">Technical</button>
+      <button class="btn" onclick="showSection('cultural')">Cultural</button>
+      <button class="btn" onclick="showSection('post')">Post</button>
+    </div>
+
+    <!-- Technical Events -->
+    <div id="technical" class="card">
+      <h3>Technical Events</h3>
+      <div id="technicalList"></div>
+    </div>
+
+    <!-- Cultural Events -->
+    <div id="cultural" class="card">
+      <h3>Cultural Events</h3>
+      <div id="culturalList"></div>
+    </div>
+
+    <!-- Post Event Form -->
+    <div id="post" class="card">
+      <h3>Post New Event</h3>
+      <select id="category" class="form-select">
+        <option value="technical">Technical</option>
+        <option value="cultural">Cultural</option>
+      </select>
+      <input type="text" id="programName" placeholder="Program Name" class="form-input">
+      <input type="text" id="eventName" placeholder="Event Name" class="form-input">
+      <input type="text" id="eventTime" placeholder="Time" class="form-input">
+      <input type="text" id="eventVenue" placeholder="Venue" class="form-input">
+      <input type="date" id="eventDate" class="form-input">
+      <button class="submit-btn" onclick="postEvent()">Submit</button>
+    </div>
+  </div>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="app.js"></script>
+
+  <script>
+    function showSection(section) {
+      document.querySelectorAll('.card').forEach(card => card.style.display = 'none');
+      document.getElementById(section).style.display = 'block';
+    }
+
+    // Load events on page load
+    window.onload = loadEvents;
+  </script>
+</body>
+</html>

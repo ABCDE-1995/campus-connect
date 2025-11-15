@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Campus Connect - College Outline</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f7fa;
+    }
+
+    /* Navbar */
+    .navbar {
+      background: #222;
+      color: white;
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .navbar h1 {
+      margin: 0;
+      font-size: 20px;
+    }
+    .navbar a {
+      color: white;
+      margin-left: 15px;
+      text-decoration: none;
+      font-size: 15px;
+    }
+    .navbar a:hover {
+      text-decoration: underline;
+    }
+
+    .container {
+      padding: 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      margin-top: 0;
+    }
+
+    .btn {
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      margin: 5px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background: #0056b3;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 6px 0 15px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    .outline-box {
+      background: #f9f9f9;
+      padding: 12px;
+      border-radius: 8px;
+      margin: 10px 0;
+      border: 1px solid #ddd;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <h1>Campus Connect</h1>
+    <div>
+      <a href="home.html">Home</a>
+      <a href="announcement.html">Announcements</a>
+      <a href="events.html">Events</a>
+      <a href="lostfound.html">Lost & Found</a>
+      <a href="outline.html">College Outline</a>
+      <a href="about.html">About</a>
+      <a href="index.html">Logout</a>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="card">
+      <h2>College Outline</h2>
+      <button class="btn" onclick="showSection('see')">See Outline</button>
+      <button class="btn" onclick="showSection('update')">Update Outline</button>
+    </div>
+
+    <!-- See Outline Section -->
+    <div id="seeOutline" class="card hidden">
+      <h2>All Outlines</h2>
+      <div id="outlineList">
+        <p>No outlines added yet.</p>
+      </div>
+    </div>
+
+    <!-- Update Outline Section -->
+    <div id="updateOutline" class="card hidden">
+      <h2>Update Outline</h2>
+      <form onsubmit="updateOutline(event)">
+        <label>Lab / Room Name</label>
+        <input type="text" id="labName" placeholder="Enter Lab or Room Name" required>
+
+        <label>Block No</label>
+        <input type="text" id="blockNo" placeholder="Enter Block No" required>
+
+        <label>Floor No</label>
+        <input type="text" id="floorNo" placeholder="Enter Floor No" required>
+
+        <label>Room No</label>
+        <input type="text" id="roomNo" placeholder="Enter Room No" required>
+
+        <button type="submit" class="btn">Submit</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="app.js"></script>
+
+  <script>
+    function showSection(section) {
+      document.getElementById('seeOutline').classList.add('hidden');
+      document.getElementById('updateOutline').classList.add('hidden');
+
+      if (section === 'see') {
+        document.getElementById('seeOutline').classList.remove('hidden');
+        loadOutlines(); // load data from Firestore
+      } else {
+        document.getElementById('updateOutline').classList.remove('hidden');
+      }
+    }
+  </script>
+</body>
+</html>

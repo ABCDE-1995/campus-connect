@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <h1>Campus Connect</h1>
+    <div>
+      <a href="home.html">Home</a>
+      <a href="timetable.html">Time Table</a>
+      <a href="events.html">Events</a>
+      <a href="outline.html">Outline</a>
+      <a href="lostfound.html">Lost & Found</a>
+      <a href="announcement.html">Announcements</a>
+      <a href="about.html">About</a>
+      <a href="profile.html">Profile</a>
+    </div>
+  </div>
+
+  <!-- Profile Section -->
+  <div class="container">
+    <div class="card">
+      <h2>My Profile</h2>
+      <div id="profileData">
+        Loading profile...
+      </div>
+      <button class="btn" onclick="editProfile()">Edit Profile</button>
+    </div>
+
+    <!-- Edit Profile Section -->
+    <div id="editProfile" class="card hidden">
+      <h2>Edit Profile</h2>
+      <form onsubmit="saveProfileEdit(currentRegno); return false;">
+        <label>Name</label>
+        <input type="text" id="name" required>
+
+        <label>Register No</label>
+        <input type="text" id="regno" required readonly>
+
+        <label>Branch</label>
+        <input type="text" id="branch" required>
+
+        <label>Email</label>
+        <input type="email" id="email" required>
+
+        <label>Phone</label>
+        <input type="text" id="phone" required>
+
+        <label>State</label>
+        <input type="text" id="state" required>
+
+        <label>District</label>
+        <input type="text" id="district" required>
+
+        <label>City</label>
+        <input type="text" id="city" required>
+
+        <label>Institution Type</label>
+        <input type="text" id="instType" required>
+
+        <label>Institution Name</label>
+        <input type="text" id="instName" required>
+
+        <button type="submit" class="btn">Save</button>
+        <button type="button" class="btn btn-secondary" onclick="cancelEdit()">Cancel</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="app.js"></script>
+  <script>
+    let currentRegno = null;
+
+    // Load profile from localStorage or Firestore
+   // Load profile from localStorage or Firestore
+window.addEventListener("load", () => {
+  const currentUser = localStorage.getItem("currentUser"); // get logged-in user
+
+  if (currentUser) {
+    currentRegno = currentUser;        // ✅ set currentRegno
+    loadProfile(currentRegno);          // pass regno to loadProfile
+  } else {
+    // If no user is logged in
+    document.getElementById("profileData").innerHTML =
+      "⚠️ No user logged in. Please register or login first.";
+  }
+});
+
+
+
+    function editProfile() {
+      const profileCard = document.getElementById("profileData");
+      const editCard = document.getElementById("editProfile");
+
+      db.collection("users").doc(currentRegno).get().then(doc => {
+        if (doc.exists) {
+          const data = doc.data();
+          document.getElementById("name").value = data.name;
+          document.getElementById("regno").value = data.regno;
+          document.getElementById("branch").value = data.branch;
+          document.getElementById("email").value = data.email;
+          document.getElementById("phone").value = data.phone;
+          document.getElementById("state").value = data.state;
+          document.getElementById("district").value = data.district;
+          document.getElementById("city").value = data.city;
+          document.getElementById("instType").value = data.instType;
+          document.getElementById("instName").value = data.instName;
+
+          editCard.classList.remove("hidden");
+          profileCard.parentElement.classList.add("hidden");
+        }
+      });
+    }
+
+    function cancelEdit() {
+      document.getElementById("editProfile").classList.add("hidden");
+      document.querySelector(".container .card").classList.remove("hidden");
+    }
+  </script>
+</body>
+</html>

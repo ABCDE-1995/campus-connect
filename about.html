@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Campus Connect - About</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f7fa;
+    }
+
+    /* Navbar */
+    .navbar {
+      background: #222;
+      color: white;
+      padding: 12px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .navbar h1 {
+      margin: 0;
+      font-size: 20px;
+    }
+    .navbar a {
+      color: white;
+      margin-left: 15px;
+      text-decoration: none;
+      font-size: 15px;
+    }
+    .navbar a:hover {
+      text-decoration: underline;
+    }
+
+    /* Content */
+    .container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .card {
+      display: flex;
+      max-width: 900px;
+      background: white;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .card img {
+      width: 400px;
+      height: auto;
+      object-fit: cover;
+    }
+    .content {
+      padding: 20px;
+      flex: 1;
+    }
+    .content h2 {
+      margin-top: 0;
+      color: #333;
+    }
+    .content p {
+      color: #555;
+      line-height: 1.6;
+    }
+    .btn {
+      display: inline-block;
+      margin-top: 15px;
+      padding: 10px 20px;
+      background-color: #0077cc;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: background 0.3s ease;
+    }
+    .btn:hover {
+      background-color: #005fa3;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <h1>Campus Connect</h1>
+    <div>
+      <a href="home.html">Home</a>
+      <a href="announcement.html">Announcements</a>
+      <a href="events.html">Events</a>
+      <a href="lostfound.html">Lost & Found</a>
+      <a href="outline.html">College Outline</a>
+      <a href="about.html">About</a>
+      <a href="index.html">Logout</a>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="card">
+      <!-- Left side: Image -->
+      <img src="college-building.jpg" alt="College Building">
+
+      <!-- Right side: Content -->
+      <div class="content">
+        <h2>Welcome to Campus Connect</h2>
+        <p>
+          Campus Connect is designed to provide students and faculty with the latest
+          updates, announcements, timetables, events, and resources for both academics
+          and cultural activities. Our mission is to enhance learning experiences and
+          keep everyone connected across the campus.
+        </p>
+        <!-- Learn More Button (link to your PDF) -->
+        <a href="CampusConnect_User_Guide.pdf" class="btn" target="_blank">📄 Learn More</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

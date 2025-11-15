@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Campus Connect - Time Table</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .form-section {
+      text-align: center;
+      margin: 20px 0;
+    }
+    select, button {
+      padding: 8px 10px;
+      margin: 6px;
+      font-size: 14px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    .timetable {
+      display: none;
+      margin-top: 20px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 30px;
+      background: #fff;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      text-align: center;
+    }
+    th {
+      background: #e9f0ff;
+    }
+    .meta {
+      text-align:center;
+      color:#555;
+      margin-bottom:10px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <div class="navbar">
+    <h1>Campus Connect</h1>
+    <div>
+      <a href="home.html">Home</a>
+      <a href="announcement.html">Announcements</a>
+      <a href="events.html">Events</a>
+      <a href="timetable.html">Time Table</a>
+      <a href="lostfound.html">Lost & Found</a>
+      <a href="outline.html">College Outline</a>
+      <a href="about.html">About</a>
+      <a href="profile.html">Profile</a>
+      <a href="index.html">Logout</a>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="container">
+    <h2 class="text-center">College Time Table</h2>
+
+    <div class="form-section">
+      <label for="branch">Branch:</label>
+      <select id="branch">
+        <option value="CSE">CSE</option>
+        <option value="ECE">ECE</option>
+        <option value="EEE">EEE</option>
+        <option value="IT">IT</option>
+        <option value="MEC">MEC</option>
+      </select>
+
+      <label for="year">Year:</label>
+      <select id="year">
+        <option value="1">1st Year</option>
+        <option value="2">2nd Year</option>
+        <option value="3">3rd Year</option>
+        <option value="4">4th Year</option>
+      </select>
+
+      <label for="section">Section:</label>
+      <select id="section">
+        <option value="A">A</option>
+        <option value="B">B</option>
+        <option value="C">C</option>
+        <option value="RL">RL</option>
+      </select>
+
+      <button onclick="showTimeTable()">Show Time Table</button>
+    </div>
+
+    <div id="timetable" class="timetable">
+      <h3 class="text-center" id="tt-title">Time Table</h3>
+      <div class="meta" id="tt-meta"></div>
+      <div id="tt-content"></div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script>
+    // Weekdays & Period slots
+    const DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    const SLOTS = ["9:00–10:00", "10:00–11:00", "11:10–12:00","1:00–2:00", "2:00–3:00", "3:10–4:00"];
+
+    // Base subjects per branch/year (shortened for demo, you can add full)
+    const BASE = {
+      CSE: {
+        1: [
+          ["Maths I","Physics","C Programming","English","IT Workshop","Sports"],
+          ["Physics","Maths I","English","C Programming","Graphics","Library"],
+          ["C Programming","Physics","Maths I","English","Workshop","Sports"],
+          ["English","Physics","Maths I","C Programming","Graphics","Club Activity"],
+          ["Maths I","C Programming","English","Physics","Workshop","Sports"],
+          ["Seminar","Soft Skills","C Lab","C Lab","Physics Lab","Physics Lab"]
+        ]
+      }
+      // Add ECE, EEE, IT, MEC like before
+    };
+
+    // Helper: rotate an array
+    function rotate(arr, k) {
+      const n = arr.length;
+      const r = ((k % n) + n) % n;
+      return arr.slice(n - r).concat(arr.slice(0, n - r));
+    }
+
+    function sectionShift(section) {
+      return { A: 0, B: 1, C: 2, RL: 3 }[section] ?? 0;
+    }
+
+    function buildTable(branch, year, section) {
+      const grid = BASE[branch]?.[year];
+      if (!grid) return "<p>No timetable configured.</p>";
+
+      const shift = sectionShift(section);
+
+      let html = '<table><tr><th>Day</th>';
+      SLOTS.forEach(s => html += `<th>${s}</th>`);
+      html += '</tr>';
+
+      for (let i = 0; i < DAYS.length; i++) {
+        const periods = grid[i] || [];
+        const rotated = rotate(periods, shift);
+        html += `<tr><td>${DAYS[i]}</td>` + rotated.map(p => `<td>${p}</td>`).join("") + `</tr>`;
+      }
+      html += '</table>';
+      return html;
+    }
+
+    function showTimeTable() {
+      const branch = document.getElementById("branch").value;
+      const year = document.getElementById("year").value;
+      const section = document.getElementById("section").value;
+
+      const timetable = document.getElementById("timetable");
+      const title = document.getElementById("tt-title");
+      const meta = document.getElementById("tt-meta");
+      const content = document.getElementById("tt-content");
+
+      title.innerText = `${branch} – Year ${year} – Section ${section} | Time Table`;
+      meta.innerText = `Days: ${DAYS.join(", ")} | Periods: ${SLOTS.join(" | ")}`;
+      content.innerHTML = buildTable(branch, Number(year), section);
+
+      timetable.style.display = "block";
+    }
+  </script>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
